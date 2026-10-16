@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LinguaVerse 灵语宇宙 · 沉浸式多语种学习平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ================= 认证页 ================= -->
+<div id="auth-page" class="auth-page hidden">
+  <div class="auth-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="logo-badge">LV</div>
+      <div>
+        <h1>LinguaVerse</h1>
+        <p>灵语宇宙 · 沉浸式多语种学习平台</p>
+      </div>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">登录</button>
+      <button class="auth-tab" data-tab="register">注册</button>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <label>邮箱 / 用户名
+        <input type="text" id="login-account" placeholder="输入你的账号" autocomplete="username" required />
+      </label>
+      <label>密码
+        <input type="password" id="login-password" placeholder="输入密码" autocomplete="current-password" required />
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">进入学习宇宙</button>
+      <p class="auth-tip">演示账号：<strong>demo@lingua.io</strong> / 密码 <strong>123456</strong></p>
+    </form>
+
+    <form id="register-form" class="auth-form hidden">
+      <div class="form-row">
+        <label>昵称
+          <input type="text" id="reg-name" placeholder="如何称呼你？" required />
+        </label>
+        <label>邮箱
+          <input type="email" id="reg-email" placeholder="you@example.com" required />
+        </label>
+      </div>
+      <label>密码（至少 6 位）
+        <input type="password" id="reg-password" placeholder="设置密码" minlength="6" required />
+      </label>
+      <div class="form-row">
+        <label>感兴趣的语言
+          <select id="reg-lang">
+            <option value="en">英语 English</option>
+            <option value="ja">日语 日本語</option>
+            <option value="ko">韩语 한국어</option>
+          </select>
+        </label>
+        <label>每日目标
+          <select id="reg-goal">
+            <option value="10">轻松 · 10 XP</option>
+            <option value="30" selected>常规 · 30 XP</option>
+            <option value="60">冲刺 · 60 XP</option>
+          </select>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">创建账号，开启旅程</button>
+    </form>
+
+    <div class="auth-langs">
+      <span class="lang-chip lang-en">English</span>
+      <span class="lang-chip lang-ja">日本語</span>
+      <span class="lang-chip lang-ko">한국어</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 主应用 ================= -->
+<div id="app" class="app hidden">
+  <!-- 移动端侧边栏遮罩：点击空白处收回 -->
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <!-- 侧边导航 -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo-badge sm">LV</div>
+      <span>LinguaVerse</span>
+    </div>
+    <nav class="nav-list" id="nav-list">
+      <a class="nav-item active" data-route="dashboard"><span class="nav-ico">🏠</span>学习仪表盘</a>
+      <a class="nav-item" data-route="courses"><span class="nav-ico">🗂️</span>分级课程</a>
+      <a class="nav-item" data-route="vocab"><span class="nav-ico">🃏</span>单词记忆</a>
+      <a class="nav-item" data-route="grammar"><span class="nav-ico">✏️</span>语法练习</a>
+      <a class="nav-item" data-route="speaking"><span class="nav-ico">🎙️</span>口语跟读</a>
+      <a class="nav-item" data-route="listening"><span class="nav-ico">🎧</span>听力训练</a>
+      <a class="nav-item" data-route="progress"><span class="nav-ico">📈</span>学习进度</a>
+      <a class="nav-item" data-route="community"><span class="nav-ico">💬</span>社区广场</a>
+      <a class="nav-item" data-route="achievements"><span class="nav-ico">🏆</span>成就激励</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="daily-goal-card">
+        <div class="dg-head">
+          <span>今日目标</span>
+          <span id="sidebar-goal-text">0 / 30 XP</span>
+        </div>
+        <div class="progress-ring" id="goal-ring">
+          <svg viewBox="0 0 42 42">
+            <circle class="ring-bg" cx="21" cy="21" r="17.5"/>
+            <circle class="ring-fg" cx="21" cy="21" r="17.5" id="goal-ring-fg"/>
+          </svg>
+          <span id="goal-pct">0%</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 主区域 -->
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menu-btn">☰</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn active" data-lang="en"><span>🇬🇧</span>英语</button>
+        <button class="lang-btn" data-lang="ja"><span>🇯🇵</span>日语</button>
+        <button class="lang-btn" data-lang="ko"><span>🇰🇷</span>韩语</button>
+      </div>
+      <div class="topbar-stats">
+        <div class="stat-pill flame" title="连续学习">
+          <span class="stat-ico">🔥</span><span id="top-streak">0</span><span class="stat-unit">天</span>
+        </div>
+        <div class="stat-pill xp" title="经验值">
+          <span class="stat-ico">⚡</span><span id="top-xp">0</span><span class="stat-unit">XP</span>
+        </div>
+        <div class="stat-pill gem" title="等级">
+          <span class="stat-ico">💎</span><span id="top-level">Lv.1</span>
+        </div>
+      </div>
+      <div class="user-menu" id="user-menu">
+        <button class="user-btn" id="user-btn">
+          <span class="avatar" id="top-avatar">U</span>
+          <span id="top-username">学员</span>
+          <span class="caret">▾</span>
+        </button>
+        <div class="user-dropdown hidden" id="user-dropdown">
+          <a data-action="profile">👤 个人资料</a>
+          <a data-action="goal">🎯 修改每日目标</a>
+          <a data-action="sound">🔊 练习音效</a>
+          <a data-action="logout">🚪 退出登录</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="view" id="view"><!-- 视图渲染区 --></main>
+  </div>
+</div>
+
+<!-- 全局 Toast / 成就解锁层 -->
+<div id="toast-root" class="toast-root"></div>
+<div id="achievement-pop" class="ach-pop hidden">
+  <div class="ach-pop-inner">
+    <div class="ach-pop-ico" id="ach-pop-ico">🏅</div>
+    <div>
+      <p class="ach-pop-label">成就解锁</p>
+      <p class="ach-pop-name" id="ach-pop-name"></p>
+      <p class="ach-pop-desc" id="ach-pop-desc"></p>
+    </div>
+  </div>
+</div>
+
+<!-- 通用弹窗 -->
+<div id="modal-root" class="modal-root hidden">
+  <div class="modal-mask" data-close></div>
+  <div class="modal" id="modal-box">
+    <button class="modal-close" data-close>✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
